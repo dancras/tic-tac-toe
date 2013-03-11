@@ -30,4 +30,18 @@ class SymbolTest extends PHPUnit_Framework_TestCase
 
         $symbol = new Symbol('G');
     }
+
+    public function testIsEqualToIsTrueGivenMatching()
+    {
+        $symbol = new Symbol('X');
+
+        $this->assertTrue($symbol->isEqualTo(new Symbol('X')));
+    }
+
+    public function testIsEqualToIsFalseGivenNonMatching()
+    {
+        $symbol = new Symbol('O');
+
+        $this->assertFalse($symbol->isEqualTo(new Symbol('X')));
+    }
 }

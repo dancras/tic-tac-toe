@@ -23,4 +23,9 @@ class Symbol
     {
         return $this->value;
     }
+
+    public function isEqualTo(Symbol $symbol)
+    {
+        return $this->value === $symbol->getValue();
+    }
 }
