@@ -37,4 +37,18 @@ class CoordinateTest extends PHPUnit_Framework_TestCase
 
         $coordinate = new Coordinate(-1);
     }
+
+    public function testIsEqualToIsTrueGivenMatching()
+    {
+        $coordinate = new Coordinate(1);
+
+        $this->assertTrue($coordinate->isEqualTo(new Coordinate(1)));
+    }
+
+    public function testIsEqualToIsFalseGivenNonMatching()
+    {
+        $coordinate = new Coordinate(0);
+
+        $this->assertFalse($coordinate->isEqualTo(new Coordinate(1)));
+    }
 }

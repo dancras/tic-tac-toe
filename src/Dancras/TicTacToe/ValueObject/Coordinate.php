@@ -27,4 +27,9 @@ class Coordinate
     {
         return $this->value;
     }
+
+    public function isEqualTo(Coordinate $coordinate)
+    {
+        return $coordinate->getValue() === $this->value;
+    }
 }
