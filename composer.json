@@ -1,0 +1,12 @@
+{
+    "autoload": {"psr-0": {"": "src"}},
+    "require": {
+        "lstrojny/functional-php": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "dancras/groundwork": "*",
+        "dancras/doubles": "*"
+    },
+    "minimum-stability": "dev"
+}

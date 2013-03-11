@@ -1,0 +1,10 @@
+<?php
+
+namespace %namespace%;
+
+use Exception;
+
+class %className% extends Exception
+{
+    const FQCN = '\%namespace%\%className%';
+}
