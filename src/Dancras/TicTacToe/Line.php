@@ -17,7 +17,11 @@ class Line
     public function set(Coordinate $i, Symbol $symbol)
     {
         if ($i->getValue() > 2) {
-            throw new GuardException('Line length exceeded');
+            throw new GuardException('Coordinate must be less than 2');
+        }
+
+        if (isset($this->coordinates[$i->getValue()])) {
+            throw new GuardException('Position is occupied');
         }
 
         $this->coordinates[$i->getValue()] = $symbol;

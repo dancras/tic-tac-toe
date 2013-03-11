@@ -55,4 +55,13 @@ class LineTest extends PHPUnit_Framework_TestCase
         $this->line->set(new Coordinate(3), $cross);
     }
 
+    public function testItRefusesOccupiedCoordinates()
+    {
+        $cross = new Symbol('X');
+        $this->line->set(new Coordinate(0), $cross);
+
+        $this->setExpectedException(GuardException::FQCN);
+        $this->line->set(new Coordinate(0), $cross);
+    }
+
 }
