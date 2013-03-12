@@ -45,4 +45,9 @@ class Line
 
         return null;
     }
+
+    public function getHighestCoordinate()
+    {
+        return 2;
+    }
 }
