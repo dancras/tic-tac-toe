@@ -50,4 +50,9 @@ class Line
     {
         return 2;
     }
+
+    public function getSize()
+    {
+        return 3;
+    }
 }
