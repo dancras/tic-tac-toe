@@ -29,8 +29,8 @@ class BackDiagonalMapperTest extends PHPUnit_Framework_TestCase
             new Coordinate(0)
         );
 
-        $this->line->spy('set')->oneCallArg(0)->isEqualTo(new Coordinate(0));
-        $this->line->spy('set')->oneCallArg(1)->isEqualTo(new Symbol('X'));
+        $this->assertTrue($this->line->spy('set')->oneCallArg(0)->isEqualTo(new Coordinate(0)));
+        $this->assertTrue($this->line->spy('set')->oneCallArg(1)->isEqualTo(new Symbol('X')));
     }
 
     public function testItDoesNothingToLineWhenMovePlayedWithUnequalCoordinates()
