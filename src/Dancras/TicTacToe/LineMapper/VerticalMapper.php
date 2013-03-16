@@ -24,6 +24,7 @@ class VerticalMapper
 
     public function playMove(Symbol $symbol, Coordinate $x, Coordinate $y)
     {
-        $this->rows[$x->getValue()]->set($y, $symbol);
+        $row = $x->getValue();
+        $this->rows[$row] = $this->rows[$row]->set($y, $symbol);
     }
 }

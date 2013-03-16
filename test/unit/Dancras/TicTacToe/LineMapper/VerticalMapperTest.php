@@ -3,7 +3,7 @@
 namespace test\unit\Dancras\TicTacToe\LineMapper;
 
 use Dancras\Common\Exception\ConfigurationException;
-use Dancras\TicTacToe\Line;
+use Dancras\TicTacToe\Line\EmptyLine;
 use Dancras\TicTacToe\LineMapper\VerticalMapper;
 use Dancras\TicTacToe\ValueObject\Coordinate;
 use Dancras\TicTacToe\ValueObject\Symbol;
@@ -17,15 +17,20 @@ class VerticalMapperTest extends PHPUnit_Framework_TestCase
 
     private $columns;
 
+    private $newLine;
+
     public function setUp()
     {
         $this->columns = array(
-            Doubles::fromClass(Line::FQCN)->stub('getSize', 3),
-            Doubles::fromClass(Line::FQCN)->stub('getSize', 3),
-            Doubles::fromClass(Line::FQCN)->stub('getSize', 3)
+            Doubles::fromClass(EmptyLine::FQCN)->stub('getSize', 3),
+            Doubles::fromClass(EmptyLine::FQCN)->stub('getSize', 3),
+            Doubles::fromClass(EmptyLine::FQCN)->stub('getSize', 3)
         );
 
         $this->mapper = new VerticalMapper($this->columns);
+
+        $this->newLine = Doubles::fromInterface('\Dancras\TicTacToe\Line\ILine');
+        $this->columns[0]->stub('set', $this->newLine);
     }
 
     public function testItRefusesLessRowsThanLineSize()
@@ -65,12 +70,12 @@ class VerticalMapperTest extends PHPUnit_Framework_TestCase
 
         $this->mapper->playMove(
             new Symbol('X'),
-            new Coordinate(0),
+            new Coordinate(1),
             new Coordinate(1)
         );
 
         $this->assertTrue($this->columns[0]->spy('set')->arg(0, 0)->isEqualTo(new Coordinate(0)));
-        $this->assertTrue($this->columns[0]->spy('set')->arg(1, 0)->isEqualTo(new Coordinate(1)));
+        $this->assertTrue($this->columns[1]->spy('set')->arg(0, 0)->isEqualTo(new Coordinate(1)));
     }
 
     public function testItSetsTheCorrectSymbol()
@@ -89,5 +94,16 @@ class VerticalMapperTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->columns[0]->spy('set')->arg(0, 1)->isEqualTo(new Symbol('X')));
         $this->assertTrue($this->columns[1]->spy('set')->arg(0, 1)->isEqualTo(new Symbol('O')));
+    }
+
+    public function testItReplacesLineOfRowWhenSettingSymbol()
+    {
+        $yCoordinate = new Coordinate(1);
+        $symbol = new Symbol('X');
+
+        $this->mapper->playMove(new Symbol('X'), new Coordinate(0), new Coordinate(0));
+        $this->mapper->playMove($symbol, new Coordinate(0), $yCoordinate);
+
+        $this->newLine->spy('set')->checkArgs($yCoordinate, $symbol);
     }
 }

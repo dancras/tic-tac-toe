@@ -24,6 +24,7 @@ class HorizontalMapper
 
     public function playMove(Symbol $symbol, Coordinate $x, Coordinate $y)
     {
-        $this->rows[$y->getValue()]->set($x, $symbol);
+        $row = $y->getValue();
+        $this->rows[$row] = $this->rows[$row]->set($x, $symbol);
     }
 }
