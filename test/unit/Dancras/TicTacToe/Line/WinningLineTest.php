@@ -44,18 +44,14 @@ class WinningLineTest extends PHPUnit_Framework_TestCase
         $this->deadLineFactory->stub('create', $this->deadLine);
     }
 
-    public function testItSetsCoordinateOnExistingLine()
+    public function testItRepeatsSetOnExistingLine()
     {
-        $this->winningLine->set(new Coordinate(0), new Symbol('X'));
+        $coordinate = new Coordinate(0);
+        $symbol = new Symbol('X');
 
-        $this->assertTrue($this->existingLine->spy('set')->arg(0, 0)->isEqualTo(new Coordinate(0)));
-    }
+        $this->winningLine->set($coordinate, $symbol);
 
-    public function testItSetsSymbolOnExistingLine()
-    {
-        $this->winningLine->set(new Coordinate(0), new Symbol('X'));
-
-        $this->assertTrue($this->existingLine->spy('set')->arg(0, 1)->isEqualTo(new Symbol('X')));
+        $this->existingLine->spy('set')->checkArgs($coordinate, $symbol);
     }
 
     public function testItReturnsNewWinningLineWhenSymbolMatchesItsOwn()
@@ -65,25 +61,14 @@ class WinningLineTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->newWinningLine, $newLine);
     }
 
-    public function testItCreatesNewWinningLineWithSelf()
+    public function testItCreatesNewWinningLineCorrectly()
     {
-        $this->winningLine->set(new Coordinate(0), new Symbol('X'));
+        $coordinate = new Coordinate(0);
+        $symbol = new Symbol('X');
 
-        $this->assertSame($this->winningLine, $this->winningLineFactory->spy('create')->arg(0, 0));
-    }
+        $this->winningLine->set($coordinate, $symbol);
 
-    public function testItCreatesNewWinningLineWithSetCoordinate()
-    {
-        $this->winningLine->set(new Coordinate(0), new Symbol('X'));
-
-        $this->assertTrue($this->winningLineFactory->spy('create')->arg(0, 1)->isEqualTo(new Coordinate(0)));
-    }
-
-    public function testItCreatesNewWinningLineWithSetSymbol()
-    {
-        $this->winningLine->set(new Coordinate(0), new Symbol('X'));
-
-        $this->assertTrue($this->winningLineFactory->spy('create')->arg(0, 2)->isEqualTo(new Symbol('X')));
+        $this->winningLineFactory->checkArgs($this->winningLine, $coordinate, $symbol);
     }
 
     public function testItReturnsDeadLineWhenSymbolDiffersFromItsOwn()
@@ -93,25 +78,14 @@ class WinningLineTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->deadLine, $returnedLine);
     }
 
-    public function testItCreatesDeadLineWithSelf()
+    public function testItCreatesDeadLineCorrectly()
     {
-        $this->winningLine->set(new Coordinate(0), new Symbol('O'));
+        $coordinate = new Coordinate(0);
+        $symbol = new Symbol('O');
 
-        $this->assertSame($this->winningLine, $this->deadLineFactory->spy('create')->arg(0, 0));
-    }
+        $this->winningLine->set($coordinate, $symbol);
 
-    public function testItCreatesDeadLineWithSetCoordinate()
-    {
-        $this->winningLine->set(new Coordinate(0), new Symbol('O'));
-
-        $this->assertTrue($this->deadLineFactory->spy('create')->arg(0, 1)->isEqualTo(new Coordinate(0)));
-    }
-
-    public function testItCreatesDeadLineWithSetSymbol()
-    {
-        $this->winningLine->set(new Coordinate(0), new Symbol('O'));
-
-        $this->assertTrue($this->deadLineFactory->spy('create')->arg(0, 2)->isEqualTo(new Symbol('O')));
+        $this->deadLineFactory->checkArgs($this->winningLine, $coordinate, $symbol);
     }
 
     public function testItRefusesItsOwnCoordinate()
@@ -122,6 +96,8 @@ class WinningLineTest extends PHPUnit_Framework_TestCase
 
     public function testItNotifiesOfWinnerWhenRestOfLineIsLongEnough()
     {
+        $symbol = new Symbol('X');
+
         $this->existingLine->stub('getNumberOfCoordinates', 2);
         $this->existingLine->stub('getHighestCoordinate', 2);
 
@@ -131,10 +107,10 @@ class WinningLineTest extends PHPUnit_Framework_TestCase
             $this->winObserver,
             $this->existingLine,
             new Coordinate(1),
-            new Symbol('X')
+            $symbol
         );
 
-        $this->assertTrue($this->winObserver->spy('whenGameIsWon')->arg(0, 0)->isEqualTo(new Symbol('X')));
+        $this->winObserver->spy('whenGameIsWon')->checkArgs($symbol);
     }
 
     public function testItGetsHighestCoordinateFromExistingLine()
