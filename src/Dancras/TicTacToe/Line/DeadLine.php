@@ -3,6 +3,7 @@
 namespace Dancras\TicTacToe\Line;
 
 use Dancras\Common\Exception\GuardException;
+use Dancras\TicTacToe\LineFactory\DeadLineFactory;
 use Dancras\TicTacToe\ValueObject\Coordinate;
 use Dancras\TicTacToe\ValueObject\Symbol;
 
@@ -15,7 +16,7 @@ class DeadLine implements ILine
     private $existingLine;
     private $coordinate;
 
-    public function __construct($deadLineFactory, ILine $line, Coordinate $i)
+    public function __construct(DeadLineFactory $deadLineFactory, ILine $line, Coordinate $i)
     {
         $this->deadLineFactory = $deadLineFactory;
         $this->existingLine = $line;

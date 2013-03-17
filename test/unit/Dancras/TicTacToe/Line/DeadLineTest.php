@@ -4,6 +4,7 @@ namespace test\unit\Dancras\TicTacToe\Line;
 
 use Dancras\Common\Exception\GuardException;
 use Dancras\TicTacToe\Line\DeadLine;
+use Dancras\TicTacToe\LineFactory\DeadLineFactory;
 use Dancras\TicTacToe\ValueObject\Coordinate;
 use Dancras\TicTacToe\ValueObject\Symbol;
 
@@ -21,7 +22,7 @@ class DeadLineTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->deadLineFactory = Doubles::fromClass('\Dancras\TicTacToe\Line\DeadLineFactory');
+        $this->deadLineFactory = Doubles::fromClass(DeadLineFactory::FQCN);
         $this->existingLine = Doubles::fromInterface('\Dancras\TicTacToe\Line\ILine');
 
         $this->deadLine = new DeadLine($this->deadLineFactory, $this->existingLine, new Coordinate(1));

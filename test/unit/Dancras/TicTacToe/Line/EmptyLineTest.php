@@ -4,6 +4,7 @@ namespace test\unit\Dancras\TicTacToe\Line;
 
 use Dancras\Common\Exception\GuardException;
 use Dancras\TicTacToe\Line\EmptyLine;
+use Dancras\TicTacToe\LineFactory\WinningLineFactory;
 use Dancras\TicTacToe\ValueObject\Coordinate;
 use Dancras\TicTacToe\ValueObject\Symbol;
 
@@ -18,7 +19,7 @@ class EmptyLineTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->winningLineFactory = Doubles::fromClass('\Dancras\TicTacToe\Line\WinningLineFactory');
+        $this->winningLineFactory = Doubles::fromClass(WinningLineFactory::FQCN);
         $this->emptyLine = new EmptyLine($this->winningLineFactory);
 
         $this->winningLine = Doubles::fromClass('\Dancras\TicTacToe\Line\WinningLine');

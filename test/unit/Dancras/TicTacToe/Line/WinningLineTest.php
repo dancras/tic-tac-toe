@@ -4,6 +4,8 @@ namespace test\unit\Dancras\TicTacToe\Line;
 
 use Dancras\Common\Exception\GuardException;
 use Dancras\TicTacToe\Line\WinningLine;
+use Dancras\TicTacToe\LineFactory\DeadLineFactory;
+use Dancras\TicTacToe\LineFactory\WinningLineFactory;
 use Dancras\TicTacToe\ValueObject\Coordinate;
 use Dancras\TicTacToe\ValueObject\Symbol;
 
@@ -24,8 +26,8 @@ class WinningLineTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->winningLineFactory = Doubles::fromClass('\Dancras\TicTacToe\Line\WinningLineFactory');
-        $this->deadLineFactory = Doubles::fromClass('\Dancras\TicTacToe\Line\DeadLineFactory');
+        $this->winningLineFactory = Doubles::fromClass(WinningLineFactory::FQCN);
+        $this->deadLineFactory = Doubles::fromClass(DeadLineFactory::FQCN);
         $this->winObserver = Doubles::fromInterface('\Dancras\TicTacToe\IWinObserver');
         $this->existingLine = Doubles::fromInterface('\Dancras\TicTacToe\Line\ILine');
         $this->winningLine = new WinningLine(
@@ -68,7 +70,7 @@ class WinningLineTest extends PHPUnit_Framework_TestCase
 
         $this->winningLine->set($coordinate, $symbol);
 
-        $this->winningLineFactory->checkArgs($this->winningLine, $coordinate, $symbol);
+        $this->winningLineFactory->spy('create')->checkArgs($this->winningLine, $coordinate, $symbol);
     }
 
     public function testItReturnsDeadLineWhenSymbolDiffersFromItsOwn()
@@ -81,11 +83,10 @@ class WinningLineTest extends PHPUnit_Framework_TestCase
     public function testItCreatesDeadLineCorrectly()
     {
         $coordinate = new Coordinate(0);
-        $symbol = new Symbol('O');
 
-        $this->winningLine->set($coordinate, $symbol);
+        $this->winningLine->set($coordinate, new Symbol('O'));
 
-        $this->deadLineFactory->checkArgs($this->winningLine, $coordinate, $symbol);
+        $this->deadLineFactory->spy('create')->checkArgs($this->winningLine, $coordinate);
     }
 
     public function testItRefusesItsOwnCoordinate()

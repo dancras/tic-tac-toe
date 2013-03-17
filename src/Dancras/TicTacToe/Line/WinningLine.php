@@ -3,6 +3,7 @@
 namespace Dancras\TicTacToe\Line;
 
 use Dancras\Common\Exception\GuardException;
+use Dancras\TicTacToe\LineFactory\DeadLineFactory;
 use Dancras\TicTacToe\ValueObject\Coordinate;
 use Dancras\TicTacToe\ValueObject\Symbol;
 
@@ -19,7 +20,7 @@ class WinningLine implements ILine
 
     public function __construct(
         $winningLineFactory,
-        $deadLineFactory,
+        DeadLineFactory $deadLineFactory,
         $winObserver,
         ILine $line,
         Coordinate $i,
@@ -48,7 +49,7 @@ class WinningLine implements ILine
             return $this->winningLineFactory->create($this, $i, $symbol);
         }
 
-        return $this->deadLineFactory->create($this, $i, $symbol);
+        return $this->deadLineFactory->create($this, $i);
     }
 
     public function getNumberOfCoordinates()
