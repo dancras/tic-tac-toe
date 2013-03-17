@@ -3,6 +3,7 @@
 namespace Dancras\TicTacToe\Line;
 
 use Dancras\Common\Exception\GuardException;
+use Dancras\TicTacToe\IWinObserver;
 use Dancras\TicTacToe\LineFactory\DeadLineFactory;
 use Dancras\TicTacToe\ValueObject\Coordinate;
 use Dancras\TicTacToe\ValueObject\Symbol;
@@ -21,7 +22,7 @@ class WinningLine implements ILine
     public function __construct(
         $winningLineFactory,
         DeadLineFactory $deadLineFactory,
-        $winObserver,
+        IWinObserver $winObserver,
         ILine $line,
         Coordinate $i,
         Symbol $symbol

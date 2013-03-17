@@ -2,6 +2,7 @@
 
 namespace Dancras\TicTacToe\LineFactory;
 
+use Dancras\TicTacToe\IWinObserver;
 use Dancras\TicTacToe\Line\ILine;
 use Dancras\TicTacToe\Line\WinningLine;
 use Dancras\TicTacToe\LineFactory\DeadLineFactory;
@@ -15,7 +16,7 @@ class WinningLineFactory
     private $deadLineFactory;
     private $winObserver;
 
-    public function __construct(DeadLineFactory $deadLineFactory, $winObserver)
+    public function __construct(DeadLineFactory $deadLineFactory, IWinObserver $winObserver)
     {
         $this->deadLineFactory = $deadLineFactory;
         $this->winObserver = $winObserver;

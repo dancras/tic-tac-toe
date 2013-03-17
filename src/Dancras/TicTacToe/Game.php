@@ -3,6 +3,7 @@
 namespace Dancras\TicTacToe;
 
 use Dancras\Common\Exception\GuardException;
+use Dancras\TicTacToe\IMoveObserver;
 use Dancras\TicTacToe\LineMapper\BackDiagonalMapper;
 use Dancras\TicTacToe\LineMapper\ForwardDiagonalMapper;
 use Dancras\TicTacToe\LineMapper\HorizontalMapper;
@@ -25,7 +26,7 @@ class Game
         ForwardDiagonalMapper $forwardDiagonalMapper,
         HorizontalMapper $horizontalMapper,
         VerticalMapper $verticalMapper,
-        $moveObserver
+        IMoveObserver $moveObserver
     ) {
         $this->mappers[] = $backDiagonalMapper;
         $this->mappers[] = $forwardDiagonalMapper;
